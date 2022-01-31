@@ -44,7 +44,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use("/documentos", express.static(`${upload.tmpFolder}/documentos`));
 
-app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
+app.use(cors());
 app.use(router);
 
 app.use(Sentry.Handlers.errorHandler());
