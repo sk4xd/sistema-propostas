@@ -25,6 +25,8 @@ class CreateProposalUseCase {
     //   throw new AppError("User already exists");
     // }
 
+  status_id = 1;
+
    return await this.proposalRepository.create({
       contract_type,
       operation_data,
