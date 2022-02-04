@@ -13,7 +13,7 @@ class ProposalUpload {
 
   @ManyToOne(() => Proposal)
   @JoinColumn({ name: "proposal_id" })
-  customer: Proposal;
+  proposal: Proposal;
 
   @Column()
   proposal_id: number;

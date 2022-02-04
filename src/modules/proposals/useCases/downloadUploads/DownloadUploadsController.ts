@@ -8,11 +8,10 @@ class DownloadUploadsController {
 
     const downloadUploadsUseCase = container.resolve(DownloadUploadsUseCase);
 
-    let download = await downloadUploadsUseCase.execute({ id: Number(id), upload_id });
+    let { Body, ContentType } = await downloadUploadsUseCase.execute({ id: Number(id), upload_id });
     response.setHeader('Access-Control-Expose-Headers', 'Content-Disposition')
-    response.download(download, function(error){
-      console.log("Error : ", error)
-    });
+    response.setHeader('Content-Type', ContentType)
+    response.send(Body)
   }
 }
 

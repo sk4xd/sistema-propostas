@@ -17,7 +17,7 @@ class DownloadUploadsUseCase {
     private storageProvider: IStorageProvider
   ) {}
 
-  async execute({ id, upload_id }: IRequest): Promise<string> {
+  async execute({ id, upload_id }: IRequest): Promise<any> {
     let upload = await this.proposalsUploadsRepository.findById(id, upload_id);
 
     if (upload) {

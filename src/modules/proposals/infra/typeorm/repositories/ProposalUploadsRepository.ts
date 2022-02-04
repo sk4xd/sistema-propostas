@@ -43,11 +43,7 @@ class ProposalUploadsRepository implements IProposalUploadsRepository {
   }
 
   async delete(proposal_id: number, upload_id: string): Promise<void> {
-    await this.repository.createQueryBuilder()
-    .delete()
-    .from(ProposalUpload, "proposalUpload")
-    .where('proposalUpload.id = :id', { id: upload_id })
-    .andWhere('proposalUpload.proposal_id = :sid', { sid: proposal_id });
+    await this.repository.delete(upload_id);
   }
 }
 
