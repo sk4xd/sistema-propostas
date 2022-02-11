@@ -17,7 +17,7 @@ class DownloadContractUseCase {
     private storageProvider: IStorageProvider
   ) {}
 
-  async execute({ id }: IRequest): Promise<string> {
+  async execute({ id }: IRequest): Promise<any> {
     const proposal = await this.proposalsRepository.findById(id);
 
     if (proposal.contract_upload) {
