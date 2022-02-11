@@ -37,13 +37,14 @@ class UsersRepository implements IUsersRepository {
     await this.repository.save(user);
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmailOrUsername(email: string): Promise<User> {
     const user = await this.repository.createQueryBuilder()
     .select("user")
     .from(User, "user")
     .addSelect("user.isAdmin")
     .addSelect("user.password")
     .where("user.email = :email", {email})
+    .orWhere("user.username = :email", {email})
     .getOne();
     return user;
   }

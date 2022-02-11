@@ -34,7 +34,7 @@ class AuthenticateUserUseCase {
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepository.findByEmailOrUsername(email);
     const {
       expires_in_token,
       secret_refresh_token,
@@ -44,13 +44,13 @@ class AuthenticateUserUseCase {
     } = auth;
 
     if (!user) {
-      throw new AppError("Email ou senha incorretos!");
+      throw new AppError("Email/Usuário ou senha incorretos!");
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError("Email ou senha incorretos!");
+      throw new AppError("Email/Usuário ou senha incorretos!");
     }
 
     const token = sign({}, secret_token, {
