@@ -41,7 +41,7 @@ class ProposalsRepository implements IProposalsRepository {
     return user;
   }
 
-  async findAll(): Promise<PaginationAwareObject> {
+  async findAll(id: string, isAdmin: boolean): Promise<PaginationAwareObject> {
     const proposals = await this.repository.createQueryBuilder("proposals")
     .select(["proposal.id", 
             "proposal.contract_type", 
@@ -60,6 +60,8 @@ class ProposalsRepository implements IProposalsRepository {
           .leftJoinAndSelect("proposal.status", "status", "status.id = proposal.status_id")
           .leftJoinAndSelect("proposal.customer", "customer", "customer.id = proposal.customer_id")
           .leftJoinAndSelect("proposal.institute", "institute", "institute.id = proposal.institute_id")
+          .where("proposal.user_id = :id", { id })
+          .orWhere("user.isAdmin = :isAdmin", { isAdmin })
           .orderBy("proposal.id", "DESC")
           .paginate();
 
