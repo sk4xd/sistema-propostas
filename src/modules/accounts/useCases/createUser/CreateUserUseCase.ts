@@ -21,7 +21,7 @@ class CreateUserUseCase {
     location,
     phoneNumber
   }: ICreateUserDTO): Promise<void> {
-    const userAlreadyExists = await this.usersRepository.findByEmail(email);
+    const userAlreadyExists = await this.usersRepository.findByEmailOrUsername(email);
 
     if (userAlreadyExists) {
       throw new AppError("User already exists");
