@@ -15,7 +15,13 @@ class ListAllProposalsUseCase {
   async execute(id: string): Promise<PaginationAwareObject> {
     const { isAdmin } = await this.usersRepository.findById(id);
 
-    const proposals = await this.proposalsRepository.findAll(id, isAdmin);
+    let proposals;
+
+    if (isAdmin) {
+      proposals = await this.proposalsRepository.findAllAdmin();
+    } else {
+      proposals = await this.proposalsRepository.findAll(id, isAdmin);
+    }
 
     return proposals;
   }

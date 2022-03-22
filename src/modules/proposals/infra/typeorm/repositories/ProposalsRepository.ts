@@ -61,7 +61,31 @@ class ProposalsRepository implements IProposalsRepository {
           .leftJoinAndSelect("proposal.customer", "customer", "customer.id = proposal.customer_id")
           .leftJoinAndSelect("proposal.institute", "institute", "institute.id = proposal.institute_id")
           .where("proposal.user_id = :id", { id })
-          .orWhere("user.isAdmin = :isAdmin", { isAdmin })
+          .orderBy("proposal.id", "DESC")
+          .paginate();
+
+    return proposals;
+  }
+
+  async findAllAdmin(): Promise<PaginationAwareObject> {
+    const proposals = await this.repository.createQueryBuilder("proposals")
+    .select(["proposal.id", 
+            "proposal.contract_type", 
+            "proposal.operation_data", 
+            "proposal.reproval_description", 
+            "proposal.final_value", 
+            "proposal.fee", 
+            "proposal.comission_value", 
+            "proposal.comission_percentage", 
+            "proposal.contract_status", 
+            "proposal.contract_upload",
+            "proposal.created_at"
+          ])
+          .from(Proposal, "proposal")
+          .leftJoinAndSelect("proposal.user", "user", "user.id = proposal.user_id")
+          .leftJoinAndSelect("proposal.status", "status", "status.id = proposal.status_id")
+          .leftJoinAndSelect("proposal.customer", "customer", "customer.id = proposal.customer_id")
+          .leftJoinAndSelect("proposal.institute", "institute", "institute.id = proposal.institute_id")
           .orderBy("proposal.id", "DESC")
           .paginate();
 

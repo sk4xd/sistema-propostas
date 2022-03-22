@@ -7,6 +7,7 @@ interface IProposalsRepository {
   findById(id: number): Promise<Proposal>;
   findByFilter(name: string): Promise<any>;
   findAll(id: string, isAdmin: boolean): Promise<PaginationAwareObject>;
+  findAllAdmin(): Promise<PaginationAwareObject>;
   update(data: any): Promise<void>;
   updateContract(id, contract): Promise<void>;
 }
