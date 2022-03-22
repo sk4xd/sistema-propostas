@@ -52,4 +52,4 @@ jobs:
             cd ~/app/sistema-propostas
             yarn
             ./node_modules/.bin/typeorm migration:run
-            pm2 restart realiza_api
+            pm2 restart api_realiza
