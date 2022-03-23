@@ -10,6 +10,7 @@ import { ListAllInstitutesController } from "@modules/proposals/useCases/listAll
 import { ListAllProposalsController } from "@modules/proposals/useCases/listAllProposals/listAllProposalsController";
 import { ListAllStatusController } from "@modules/proposals/useCases/listAllStatus/listAllStatusController";
 import { ListAllUploadsController } from "@modules/proposals/useCases/listAllUploads/listAllUploadsController";
+import { UpdateInstituteController } from "@modules/proposals/useCases/updateInstitute/UpdateInstituteController";
 import { UploadContractController } from "@modules/proposals/useCases/uploadContract/UploadContractController";
 import { UploadDocumentsController } from "@modules/proposals/useCases/uploadDocuments/UploadDocumentsController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
@@ -32,6 +33,7 @@ const downloadContractController = new DownloadContractController();
 const listAllUploadsController = new ListAllUploadsController();
 const downloadUploadsController = new DownloadUploadsController();
 const deleteUploadController = new DeleteUploadController();
+const updateInstituteController = new UpdateInstituteController();
 
 const upload = multer(uploadConfig);
 
@@ -44,6 +46,8 @@ proposalsRoutes.get("/institutes", ensureAuthenticated, listAllInstitutesControl
 proposalsRoutes.post("/institutes", ensureAuthenticated, createInstituteController.handle);
 
 proposalsRoutes.get("/status", ensureAuthenticated, listAllStatusController.handle);
+
+proposalsRoutes.put("/institutes/:id", ensureAuthenticated, updateInstituteController.handle);
 
 proposalsRoutes.put("/:id", ensureAuthenticated, changeProposalStatusController.handle);
 

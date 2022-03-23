@@ -35,7 +35,7 @@ class InstitutesRepository implements IInstitutesRepository {
     id,
     institute_name
   }): Promise<void> {
-  await this.repository.update(id, institute_name)
+    await this.repository.update(id, { institute_name });
   }
 }
 
