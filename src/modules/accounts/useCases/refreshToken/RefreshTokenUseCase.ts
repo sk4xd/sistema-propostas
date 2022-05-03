@@ -5,6 +5,7 @@ import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTok
 import auth from "@config/auth";
 import { AppError } from "@shared/errors/AppError";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 
 interface IPayload {
   sub: string;
@@ -14,6 +15,11 @@ interface IPayload {
 interface ITokenResponse {
   token: string;
   refresh_token: string;
+  user: {
+    name: string;
+    email: string;
+    isAdmin: boolean;
+  };
 }
 
 @injectable()
@@ -21,6 +27,8 @@ class RefreshTokenUseCase {
   constructor(
     @inject("UsersTokensRepository")
     private usersTokensRepository: IUsersTokensRepository,
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider
   ) {}
@@ -65,9 +73,16 @@ class RefreshTokenUseCase {
       expiresIn: auth.expires_in_token,
     });
 
+    const user = await this.usersRepository.findById(user_id);
+
     return {
       refresh_token,
       token: newToken,
+      user: {
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin
+      }
     };
   }
 }
