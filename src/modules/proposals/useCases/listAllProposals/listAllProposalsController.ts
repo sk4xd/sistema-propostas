@@ -8,10 +8,26 @@ class ListAllProposalsController {
   async handle(request: Request, response: Response): Promise<Response> {
     const listAllProposalsUseCase = container.resolve(ListAllProposalsUseCase);
     const { id } = request.user;
+    const {
+      proposal_id,
+      contract_type,
+      customer_id,
+      proposal_status,
+      contract_status,
+      date
+    } = request.query;
     getPage(request);
     getPerPage(request);
 
-    const proposals = await listAllProposalsUseCase.execute(id);
+    const proposals = await listAllProposalsUseCase.execute({
+      proposal_id,
+      contract_type,
+      customer_id,
+      proposal_status,
+      contract_status,
+      id,
+      date
+    });
 
     return response.json(proposals);
   }
