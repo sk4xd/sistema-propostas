@@ -16,6 +16,8 @@ import { UploadDocumentsController } from "@modules/proposals/useCases/uploadDoc
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 import { Router } from "express";
 import multer from "multer";
+import { checkProposalUpdate } from "../middlewares/checkProposalUpdate";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 
 
 const proposalsRoutes = Router();
@@ -43,13 +45,13 @@ proposalsRoutes.get("/", ensureAuthenticated, listAllProposalsController.handle)
 
 proposalsRoutes.get("/institutes", ensureAuthenticated, listAllInstitutesController.handle);
 
-proposalsRoutes.post("/institutes", ensureAuthenticated, createInstituteController.handle);
+proposalsRoutes.post("/institutes", ensureAuthenticated, ensureAdmin, createInstituteController.handle);
 
 proposalsRoutes.get("/status", ensureAuthenticated, listAllStatusController.handle);
 
-proposalsRoutes.put("/institutes/:id", ensureAuthenticated, updateInstituteController.handle);
+proposalsRoutes.put("/institutes/:id", ensureAuthenticated, ensureAdmin, updateInstituteController.handle);
 
-proposalsRoutes.put("/:id", ensureAuthenticated, changeProposalStatusController.handle);
+proposalsRoutes.put("/:id", ensureAuthenticated, checkProposalUpdate, changeProposalStatusController.handle);
 
 proposalsRoutes.get("/:id", ensureAuthenticated, findProposalController.handle);
 
