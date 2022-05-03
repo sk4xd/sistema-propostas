@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3333
 
+ENV TZ="America/Sao_Paulo"
+
 CMD ["npm","run","dev"] 
