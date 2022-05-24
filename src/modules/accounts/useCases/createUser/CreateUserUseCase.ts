@@ -19,7 +19,8 @@ class CreateUserUseCase {
     password,
     cellphone,
     location,
-    phoneNumber
+    phoneNumber,
+    isAdmin
   }: ICreateUserDTO): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmailOrUsername(email);
 
@@ -37,6 +38,7 @@ class CreateUserUseCase {
       location,
       phoneNumber,
       password: passwordHash,
+      isAdmin
     });
   }
 }

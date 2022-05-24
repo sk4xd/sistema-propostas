@@ -6,7 +6,7 @@ import { UpdateUserUseCase } from "./UpdateUserUseCase";
 class UpdateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const id = request.params.id;
-    const { name, email, password, cellphone, location, phoneNumber } = request.body;
+    const { name, email, password, cellphone, location, phoneNumber, isAdmin } = request.body;
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
@@ -17,7 +17,8 @@ class UpdateUserController {
       password,
       cellphone,
       location,
-      phoneNumber
+      phoneNumber,
+      isAdmin
     });
 
     return response.status(200).send();

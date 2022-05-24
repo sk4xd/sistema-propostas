@@ -7,6 +7,7 @@ interface ICreateUserDTO {
   cellphone?: string;
   location?: string;
   id?: string;
+  isAdmin: boolean;
 }
 
 export { ICreateUserDTO };

@@ -6,6 +6,7 @@ interface IUpdateUserDTO {
   cellphone?: string;
   location?: string;
   id: string;
+  isAdmin: boolean;
 }
 
 export { IUpdateUserDTO };

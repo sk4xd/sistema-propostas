@@ -19,7 +19,8 @@ class UpdateUserUseCase {
     password,
     cellphone,
     location,
-    phoneNumber
+    phoneNumber,
+    isAdmin
   }: IUpdateUserDTO): Promise<void> {
     // const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
@@ -41,6 +42,7 @@ class UpdateUserUseCase {
       phoneNumber,
       location,
       password: passwordHash,
+      isAdmin
     });
   }
 }
